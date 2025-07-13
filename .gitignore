@@ -177,16 +177,12 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Project-specific exclusions
-# Test scripts and temporary files
-create_facilitator_sessions.py
-db_debug_print.py
-assign_facilitators_to_sessions.py
+# Project-specific exclusions - Keep only essential files for running the project
+
+# All test, debug, and utility scripts
 test_*.py
 debug_*.py
 temp_*.py
-
-# Additional test and debug files
 check_*.py
 fix_*.py
 create_*.py
@@ -200,6 +196,74 @@ run_*.py
 minimal_*.py
 quick_*.py
 
+# Specific test and utility files
+create_facilitator_sessions.py
+db_debug_print.py
+assign_facilitators_to_sessions.py
+check_single_session.py
+fix_session_ownership.py
+test_facilitator_sessions.py
+check_session_ownership.py
+assign_facilitators.py
+print_sessions_schema.py
+create_facilitator_user.py
+test_profile_endpoint.py
+fix_facilitator_role.py
+create_proper_facilitator.py
+fix_facilitator.py
+check_db_structure.py
+create_facilitator_hashed.py
+create_facilitator_direct.py
+create_facilitator.py
+test_session_ownership.py
+test_token_directly.py
+open_facilitator_dashboard.py
+fix_session_assignment.py
+assign_session_to_facilitator.py
+create_test_session.py
+test_facilitator_session_cancel.py
+debug_facilitator_auth.py
+set_facilitator_role.py
+test_facilitator_auth_flow.py
+test_facilitator_dashboard.py
+test_booking_reload.py
+test_facilitator_features.py
+add_facilitators.py
+start_services.py
+test_crm_connection.py
+start_all_services.py
+test_crm_booking_notification.py
+add_sample_sessions.py
+test_user_dashboard.py
+add_sample_events.py
+test_login.py
+test_registration_final.py
+test_flask_db.py
+test_db_access.py
+test_request_parsing.py
+test_registration_direct.py
+debug_exact_error.py
+minimal_test_server.py
+test_with_error_logging.py
+debug_registration.py
+quick_test.py
+start_server_fixed.py
+fix_database_absolute.py
+fix_database.py
+run_server.py
+test_register.py
+test_flask_app.py
+debug_server.py
+test_notify_crm.py
+test_crm_app.py
+test_booking_routes.py
+test_booking_model.py
+test_event_routes.py
+test_models.py
+test_auth_service.py
+test_auth.py
+start_crm.py
+
 # HTML test files
 facilitator_dashboard.html
 user_dashboard.html
@@ -210,7 +274,7 @@ index.html
 crm_notifications.log
 notifications.json
 
-# Documentation files (keep main README and API docs)
+# Documentation files (keep only main README)
 CRM_*.md
 BOOKING_*.md
 MODELS_*.md
@@ -223,6 +287,16 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+# Keep only essential files for running the project:
+# - main.py
+# - main_app/ (entire directory)
+# - crm_microservice/ (entire directory)
+# - migrations/ (entire directory)
+# - requirements.txt
+# - README.md
+# - .gitignore
+# - env.example
 
 # CRM microservice logs and temporary files
 crm_microservice/*.log
