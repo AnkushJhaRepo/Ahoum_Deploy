@@ -4,6 +4,7 @@ from main_app.models import db
 from main_app.models.user import User
 from main_app.routes.auth_service import AuthService
 import re
+import bcrypt
 
 auth_bp = Blueprint('auth', __name__)
 
