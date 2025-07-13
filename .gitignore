@@ -1,1 +1,276 @@
+# Environment variables
 .env*
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+instance/
+*.db-journal
+
+# Logs
+*.log
+logs/
+crm_microservice/*.log
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+*.orig
+
+# Test files and directories
+test_*.py
+*_test.py
+tests/
+testing/
+pytest.ini
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+
+# Documentation build
+docs/_build/
+site/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Flask
+instance/
+.webassets-cache
+
+# Scrapy stuff
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Project-specific exclusions
+# Test scripts and temporary files
+create_facilitator_sessions.py
+db_debug_print.py
+assign_facilitators_to_sessions.py
+test_*.py
+debug_*.py
+temp_*.py
+
+# Additional test and debug files
+check_*.py
+fix_*.py
+create_*.py
+assign_*.py
+print_*.py
+set_*.py
+add_*.py
+open_*.py
+start_*.py
+run_*.py
+minimal_*.py
+quick_*.py
+
+# HTML test files
+facilitator_dashboard.html
+user_dashboard.html
+index.html
+
+# Log files
+*.log
+crm_notifications.log
+notifications.json
+
+# Documentation files (keep main README and API docs)
+CRM_*.md
+BOOKING_*.md
+MODELS_*.md
+AUTH_*.md
+roadmap.md
+api_docs.md
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# CRM microservice logs and temporary files
+crm_microservice/*.log
+crm_microservice/notifications.json
+crm_microservice/crm_notifications.log
+
+# Migration files (keep alembic.ini and env.py, but exclude generated versions)
+migrations/versions/*.py
+!migrations/versions/__init__.py
+
+# Local configuration overrides
+config_local.py
+local_config.py
+
+# Backup files
+*.backup
+*.bak
+*.old
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows
+*.lnk
+
+# Linux
+*~
+
+# macOS
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
