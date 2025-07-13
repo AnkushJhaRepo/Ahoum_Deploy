@@ -226,35 +226,35 @@ def cancel_session(session_id):
     """Cancel a session and all its bookings (facilitator must own the session)"""
     try:
         current_user_id = get_jwt_identity()
-        
+        # Convert to integer for comparison
+        current_user_id = int(current_user_id)
+        # Debug print
+        print(f"[DEBUG] Cancel attempt: user_id={current_user_id} (type: {type(current_user_id)}), session_id={session_id}")
         # Get the session and verify ownership
         session = Session.query.get_or_404(session_id)
+        print(f"[DEBUG] Session {session_id} facilitator_id={session.facilitator_id} (type: {type(session.facilitator_id)})")
+        print(f"[DEBUG] Comparison: {session.facilitator_id} != {current_user_id} = {session.facilitator_id != current_user_id}")
         if session.facilitator_id != current_user_id:
+            print(f"[DEBUG] 403: session.facilitator_id={session.facilitator_id}, current_user_id={current_user_id}")
             return jsonify({'error': 'You can only cancel your own sessions'}), 403
         
         # Check if session is in the past
         if session.is_past:
             return jsonify({'error': 'Cannot cancel a session that has already passed'}), 400
         
-        # Get all active bookings for this session
-        active_bookings = Booking.query.filter_by(
+        # Get count of active bookings for this session
+        active_bookings_count = Booking.query.filter_by(
             session_id=session_id,
             status=BookingStatus.BOOKED.value
-        ).all()
+        ).count()
         
-        # Cancel all active bookings
-        cancelled_count = 0
-        for booking in active_bookings:
-            booking.cancel()
-            cancelled_count += 1
-        
-        # Delete the session
+        # Delete the session (this will cascade delete all bookings)
         db.session.delete(session)
         db.session.commit()
         
         return jsonify({
-            'message': f'Session cancelled successfully. {cancelled_count} bookings were also cancelled.',
-            'cancelled_bookings': cancelled_count
+            'message': f'Session cancelled successfully. {active_bookings_count} bookings were also cancelled.',
+            'cancelled_bookings': active_bookings_count
         }), 200
         
     except Exception as e:
@@ -299,6 +299,26 @@ def facilitator_dashboard():
 @facilitator_bp.route('/dashboard-page', methods=['GET'])
 def facilitator_dashboard_page():
     """Serve the facilitator dashboard HTML page"""
+    try:
+        # Read the facilitator dashboard HTML file
+        import os
+        dashboard_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'facilitator_dashboard.html')
+        
+        with open(dashboard_path, 'r', encoding='utf-8') as f:
+            html_content = f.read()
+        
+        # Set proper content type
+        from flask import Response
+        return Response(html_content, mimetype='text/html')
+    except FileNotFoundError:
+        return "Facilitator dashboard not found", 404
+    except Exception as e:
+        current_app.logger.error(f"Error serving facilitator dashboard: {str(e)}")
+        return "Internal server error", 500
+
+@facilitator_bp.route('/dashboard.html', methods=['GET'])
+def facilitator_dashboard_html():
+    """Serve the facilitator dashboard HTML page (alternative route)"""
     try:
         # Read the facilitator dashboard HTML file
         import os

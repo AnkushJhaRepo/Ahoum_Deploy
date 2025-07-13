@@ -458,5 +458,51 @@
         "facilitator_name": "Event Facilitator"
       }
     }
+  },
+  {
+    "timestamp": "2025-07-13T18:20:38.190612",
+    "data": {
+      "booking_id": 40,
+      "user": {
+        "id": 16,
+        "name": "Facilitator User",
+        "email": "facilitator_gvt2zb@test.com"
+      },
+      "event": {
+        "id": 10,
+        "title": "Creative Arts & Self-Expression Festival",
+        "start_date": "2025-08-17T17:40:22.385008"
+      },
+      "facilitator_id": 10,
+      "additional_data": {
+        "session_name": "Creative Arts & Self-Expression Festival - Writing Room",
+        "session_time": "2025-08-19T08:40:27.086719",
+        "session_location": "Writing Room",
+        "facilitator_name": "Event Facilitator"
+      }
+    }
+  },
+  {
+    "timestamp": "2025-07-13T19:22:25.429910",
+    "data": {
+      "booking_id": 45,
+      "user": {
+        "id": 12,
+        "name": "John Smith",
+        "email": "john.facilitator@example.com"
+      },
+      "event": {
+        "id": 10,
+        "title": "Creative Arts & Self-Expression Festival",
+        "start_date": "2025-08-17T17:40:22.385008"
+      },
+      "facilitator_id": 14,
+      "additional_data": {
+        "session_name": "Creative Arts & Self-Expression Festival - Art Studio 1",
+        "session_time": "2025-08-18T03:40:27.086719",
+        "session_location": "Art Studio 1",
+        "facilitator_name": "Mike Wilson"
+      }
+    }
   }
 ]

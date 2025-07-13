@@ -21,7 +21,8 @@ class Booking(db.Model):
     
     # Relationships
     user = db.relationship('User', backref='bookings', lazy=True)
-    session = db.relationship('Session', backref='bookings', lazy=True)
+    # Session relationship is defined in Session model with cascade delete
+    # Access via: booking.session (backref from Session model)
     
     def __repr__(self):
         return f'<Booking {self.id} - User {self.user_id} Session {self.session_id}>'

@@ -15,6 +15,7 @@ class Session(db.Model):
     
     # Relationships
     facilitator = db.relationship('User', backref='facilitated_sessions', lazy=True)
+    bookings = db.relationship('Booking', backref='session', lazy=True, cascade='all, delete-orphan')
     # Note: event relationship is defined in Event model with backref='parent_event'
     
     def __repr__(self):
