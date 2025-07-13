@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: event-management-system
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn main:app
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        value: sqlite:///instance/app.db
+      - key: CRM_BASE_URL
+        value: http://localhost:5001
+      - key: CRM_AUTH_TOKEN
+        value: your-static-bearer-token-here 

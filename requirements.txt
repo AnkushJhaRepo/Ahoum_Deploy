@@ -24,4 +24,5 @@ MarkupSafe==3.0.2
 oauthlib==3.3.1
 urllib3==2.5.0
 urlobject==3.0.0
-typing_extensions==4.14.1 
+typing_extensions==4.14.1
+gunicorn==21.2.0 
