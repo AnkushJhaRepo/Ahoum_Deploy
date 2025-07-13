@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            min-height: 80vh;
+        }
+
+        /* Auth Section Styles */
+        .auth-container {
+            display: flex;
+            min-height: 80vh;
+        }
+
+        .auth-left {
+            flex: 1;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            color: white;
+            text-align: center;
+        }
+
+        .auth-left h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .auth-left p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .auth-left .features {
+            text-align: left;
+            margin-top: 30px;
+        }
+
+        .auth-left .features h3 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .auth-left .features ul {
+            list-style: none;
+        }
+
+        .auth-left .features li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .auth-left .features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .auth-right {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .auth-tab.active {
+            color: #4facfe;
+            border-bottom-color: #4facfe;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #4facfe;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-container {
+            display: none;
+            min-height: 80vh;
+        }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .user-info {
+            background: #e3f2fd;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-details h3 {
+            color: #1976d2;
+            margin-bottom: 5px;
+        }
+
+        .user-details p {
+            color: #666;
+            margin: 0;
+        }
+
+        .logout-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+        }
+
+        .facilitator-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-right: 10px;
+        }
+
+        .facilitator-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .events-section {
+            padding: 30px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #4facfe;
+            background: white;
+            color: #4facfe;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .filter-btn.active {
+            background: #4facfe;
+            color: white;
+        }
+
+        .filter-btn:hover {
+            background: #4facfe;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .search-box {
+            padding: 10px 20px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            width: 300px;
+            font-size: 14px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #4facfe;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #eee;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .event-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .event-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+
+        .event-status {
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.8em;
+            text-transform: uppercase;
+        }
+
+        .status-upcoming {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-active {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .status-past {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .event-dates {
+            color: #666;
+        }
+
+        .event-sessions {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .sessions-list {
+            margin-top: 10px;
+        }
+
+        .session-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s;
+        }
+
+        .session-item:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .session-info {
+            flex: 1;
+        }
+
+        .session-info strong {
+            display: block;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .session-time {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .btn-book {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .btn-book:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+        }
+
+        .btn-book:disabled {
+            background: #4caf50;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .session-item.booked {
+            background: #e8f5e8;
+            border-color: #4caf50;
+        }
+
+        .booked-badge {
+            background: #4caf50;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .booking-info {
+            background: #e8f5e8;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4caf50;
+        }
+
+        .no-bookings {
+            background: #fff3e0;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #ff9800;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .page-btn {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .page-btn:hover {
+            background: #4facfe;
+            color: white;
+            border-color: #4facfe;
+        }
+
+        .page-btn.active {
+            background: #4facfe;
+            color: white;
+            border-color: #4facfe;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .auth-container {
+                flex-direction: column;
+            }
+
+            .auth-left {
+                padding: 30px 20px;
+            }
+
+            .auth-right {
+                padding: 30px 20px;
+            }
+
+            .auth-left h1 {
+                font-size: 2em;
+            }
+
+            .filters {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .search-box {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .user-info {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        /* Loading Animation */
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4facfe;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification-success {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+        }
+
+        .notification-error {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+        }
+
+        .notification-info {
+            background: linear-gradient(135deg, #2196f3, #1976d2);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Auth Container -->
+    <div class="container">
+        <div class="auth-container" id="authContainer">
+            <div class="auth-left">
+                <h1>🎉 Event Management</h1>
+                <p>Discover amazing events, book sessions, and connect with others in our vibrant community.</p>
+
+                <div class="features">
+                    <h3>What you can do:</h3>
+                    <ul>
+                        <li>Browse all available events</li>
+                        <li>Filter events by status and search</li>
+                        <li>Book sessions for events</li>
+                        <li>Track your bookings</li>
+                        <li>Get personalized recommendations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="auth-right">
+                <div class="auth-tabs">
+                    <div class="auth-tab active" onclick="switchTab('login')">Login</div>
+                    <div class="auth-tab" onclick="switchTab('register')">Register</div>
+                </div>
+
+                <!-- Login Form -->
+                <div class="auth-form active" id="loginForm">
+                    <div class="error-message" id="loginError"></div>
+                    <div class="success-message" id="loginSuccess"></div>
+
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password">
+                    </div>
+
+                    <button class="btn btn-primary" onclick="login()">Login</button>
+                </div>
+
+                <!-- Register Form -->
+                <div class="auth-form" id="registerForm">
+                    <div class="error-message" id="registerError"></div>
+                    <div class="success-message" id="registerSuccess"></div>
+
+                    <div class="form-group">
+                        <label for="registerName">Full Name</label>
+                        <input type="text" id="registerName" placeholder="Enter your full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" placeholder="Enter your email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" placeholder="Enter your password">
+                    </div>
+
+                    <button class="btn btn-primary" onclick="register()">Register</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Container -->
+        <div class="dashboard-container" id="dashboardContainer">
+            <div class="dashboard-header">
+                <h1>🎉 Welcome to Your Dashboard</h1>
+                <p>Explore and discover amazing events</p>
+            </div>
+
+            <div class="user-info">
+                <div class="user-details">
+                    <h3 id="userName">User Name</h3>
+                    <p id="userEmail">user@example.com</p>
+                </div>
+                <button class="facilitator-btn" id="facilitatorBtn" onclick="openFacilitatorDashboard()"
+                    style="display: none;">Facilitator Dashboard</button>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+
+            <div class="events-section">
+                <h2 class="section-title">Available Events</h2>
+
+                <div class="filters">
+                    <button class="filter-btn active" onclick="filterEvents('all')">All Events</button>
+                    <button class="filter-btn" onclick="filterEvents('upcoming')">Upcoming</button>
+                    <button class="filter-btn" onclick="filterEvents('active')">Active</button>
+                    <button class="filter-btn" onclick="filterEvents('past')">Past</button>
+                    <input type="text" class="search-box" id="searchBox" placeholder="Search events..."
+                        onkeyup="debounceSearch()">
+                </div>
+
+                <div id="eventsContainer">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Loading events...</p>
+                    </div>
+                </div>
+
+                <div class="pagination" id="pagination" style="display: none;">
+                    <button class="page-btn" id="prevBtn" onclick="changePage(-1)">Previous</button>
+                    <span id="pageInfo"></span>
+                    <button class="page-btn" id="nextBtn" onclick="changePage(1)">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentToken = null;
+        let currentUser = null;
+        let currentPage = 1;
+        let currentFilter = 'all';
+        let currentSearch = '';
+        let searchTimeout = null;
+
+        // Check if user is already logged in
+        window.onload = function () {
+            const token = localStorage.getItem('authToken');
+            const userInfo = localStorage.getItem('userInfo');
+
+            if (token && userInfo) {
+                try {
+                    currentToken = token;
+                    currentUser = JSON.parse(userInfo);
+                    // Show dashboard immediately with cached user info
+                    showDashboard();
+                    // Then try to refresh user profile in background
+                    loadUserProfile();
+                } catch (error) {
+                    console.error('Error parsing cached user info:', error);
+                    logout();
+                }
+            }
+        };
+
+        function switchTab(tab) {
+            // Prevent default behavior
+            if (event) event.preventDefault();
+
+            // Update tab styles
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Show/hide forms
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            if (tab === 'login') {
+                document.getElementById('loginForm').classList.add('active');
+            } else {
+                document.getElementById('registerForm').classList.add('active');
+            }
+
+            // Clear messages
+            clearMessages();
+        }
+
+        function clearMessages() {
+            document.querySelectorAll('.error-message, .success-message').forEach(msg => {
+                msg.style.display = 'none';
+                msg.textContent = '';
+            });
+        }
+
+        function showMessage(type, message, formId) {
+            clearMessages();
+            const element = document.getElementById(formId + type.charAt(0).toUpperCase() + type.slice(1));
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+
+        async function register() {
+            // Prevent default behavior
+            if (event) event.preventDefault();
+
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+
+            if (!name || !email || !password) {
+                showMessage('error', 'Please fill in all fields', 'register');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:5000/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password })
+                });
+
+                if (response.ok) {
+                    showMessage('success', 'Registration successful! Please login.', 'register');
+                    // Clear form
+                    document.getElementById('registerName').value = '';
+                    document.getElementById('registerEmail').value = '';
+                    document.getElementById('registerPassword').value = '';
+                } else {
+                    const error = await response.json();
+                    showMessage('error', `Registration failed: ${error.error}`, 'register');
+                }
+            } catch (error) {
+                showMessage('error', 'Registration failed: ' + error.message, 'register');
+            }
+        }
+
+        async function login() {
+            // Prevent default behavior
+            if (event) event.preventDefault();
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (!email || !password) {
+                showMessage('error', 'Please fill in all fields', 'login');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:5000/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    currentToken = data.access_token;
+                    currentUser = data.user;
+
+                    localStorage.setItem('authToken', currentToken);
+                    localStorage.setItem('userInfo', JSON.stringify(currentUser));
+
+                    showDashboard();
+                } else {
+                    const error = await response.json();
+                    showMessage('error', `Login failed: ${error.error}`, 'login');
+                }
+            } catch (error) {
+                showMessage('error', 'Login failed: ' + error.message, 'login');
+            }
+        }
+
+        async function loadUserProfile() {
+            if (!currentToken) return;
+
+            try {
+                const response = await fetch('http://localhost:5000/auth/profile', {
+                    headers: { 'Authorization': `Bearer ${currentToken}` }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    currentUser = data.user;
+                    showDashboard();
+                } else if (response.status === 401) {
+                    // Token is invalid, clear it
+                    console.log('Token expired or invalid, logging out');
+                    logout();
+                } else {
+                    // Other error, but don't logout immediately
+                    console.error('Profile load failed:', response.status);
+                    // Still show dashboard if we have user info
+                    if (currentUser) {
+                        showDashboard();
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load profile:', error);
+                // Don't logout on network errors, only on auth errors
+                if (currentUser) {
+                    showDashboard();
+                }
+            }
+        }
+
+        function showDashboard() {
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('dashboardContainer').style.display = 'block';
+
+            // Update user info
+            if (currentUser) {
+                document.getElementById('userName').textContent = currentUser.name;
+                document.getElementById('userEmail').textContent = currentUser.email;
+            }
+
+            // Load events
+            loadEvents();
+        }
+
+        function logout() {
+            // Prevent default behavior
+            if (event) event.preventDefault();
+
+            currentToken = null;
+            currentUser = null;
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userInfo');
+
+            document.getElementById('authContainer').style.display = 'flex';
+            document.getElementById('dashboardContainer').style.display = 'none';
+
+            // Clear forms
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('registerName').value = '';
+            document.getElementById('registerEmail').value = '';
+            document.getElementById('registerPassword').value = '';
+
+            clearMessages();
+        }
+
+        function openFacilitatorDashboard() {
+            window.open('facilitator_dashboard.html', '_blank');
+        }
+
+        async function loadEvents() {
+            if (!currentToken) return;
+
+            const container = document.getElementById('eventsContainer');
+            container.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading events...</p></div>';
+
+            try {
+                let url = `http://localhost:5000/api/dashboard/events?page=${currentPage}`;
+                if (currentFilter !== 'all') {
+                    url += `&status=${currentFilter}`;
+                }
+                if (currentSearch) {
+                    url += `&search=${encodeURIComponent(currentSearch)}`;
+                }
+
+                const response = await fetch(url, {
+                    headers: { 'Authorization': `Bearer ${currentToken}` }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    displayEvents(data.events, data.pagination);
+                } else if (response.status === 401) {
+                    // Token expired, logout
+                    console.log('Token expired during events load');
+                    logout();
+                } else {
+                    container.innerHTML = '<div class="error">Failed to load events (Status: ' + response.status + ')</div>';
+                }
+            } catch (error) {
+                console.error('Error loading events:', error);
+                container.innerHTML = '<div class="error">Error loading events: ' + error.message + '</div>';
+            }
+        }
+
+        async function loadEventSessions(eventId) {
+            try {
+                const response = await fetch(`http://localhost:5000/api/events/${eventId}`, {
+                    headers: { 'Authorization': `Bearer ${currentToken}` }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    return data.sessions || [];
+                } else if (response.status === 401) {
+                    // Token expired, but don't logout here as it might be called during display
+                    console.log('Token expired during sessions load');
+                    return [];
+                }
+                return [];
+            } catch (error) {
+                console.error('Error loading sessions:', error);
+                return [];
+            }
+        }
+
+        async function bookSession(sessionId) {
+            try {
+                const response = await fetch('http://localhost:5000/api/bookings/book', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentToken}`
+                    },
+                    body: JSON.stringify({ session_id: sessionId })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    showNotification('✅ Session booked successfully!', 'success');
+                    // Use setTimeout to delay the refresh and prevent UI flicker
+                    setTimeout(() => {
+                        loadEvents(); // Refresh events to show updated booking status
+                    }, 500);
+                    return true;
+                } else if (response.status === 401) {
+                    // Token expired, logout
+                    console.log('Token expired during booking');
+                    logout();
+                    return false;
+                } else {
+                    const error = await response.json();
+                    if (response.status === 409) {
+                        showNotification('ℹ️ You already have a booking for this session!', 'info');
+                    } else {
+                        showNotification(`❌ Booking failed: ${error.error}`, 'error');
+                    }
+                    return false;
+                }
+            } catch (error) {
+                console.error('Booking error:', error);
+                showNotification('❌ Booking failed: ' + error.message, 'error');
+                return false;
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.textContent = message;
+
+            // Add to page
+            document.body.appendChild(notification);
+
+            // Show notification
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        async function displayEvents(events, pagination) {
+            const container = document.getElementById('eventsContainer');
+
+            if (events.length === 0) {
+                container.innerHTML = '<div class="loading">No events found</div>';
+                document.getElementById('pagination').style.display = 'none';
+                return;
+            }
+
+            let eventsHTML = '';
+
+            for (const event of events) {
+                // Load sessions for this event
+                const sessions = await loadEventSessions(event.id);
+
+                const sessionsHTML = sessions.map(session => {
+                    // Check if user has booked this session
+                    const isBooked = event.user_bookings && event.user_bookings.some(booking => booking.session_id === session.id);
+
+                    return `
+                        <div class="session-item ${isBooked ? 'booked' : ''}">
+                            <div class="session-info">
+                                <strong>${session.location}</strong>
+                                <span class="session-time">${formatDateTime(session.time)}</span>
+                                ${isBooked ? '<span class="booked-badge">✅ Booked</span>' : ''}
+                            </div>
+                            <button class="btn-book" onclick="bookSession(${session.id})" ${isBooked ? 'disabled' : ''}>
+                                ${isBooked ? '✅ Booked' : '📅 Book Session'}
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+
+                eventsHTML += `
+                    <div class="event-card">
+                        <h3 class="event-title">${event.title}</h3>
+                        <p class="event-description">${event.description || 'No description available'}</p>
+                        
+                        <div class="event-meta">
+                            <span class="event-status status-${event.status}">${event.status}</span>
+                            <span class="event-dates">${formatDate(event.start_date)} - ${formatDate(event.end_date)}</span>
+                        </div>
+                        
+                        <div class="event-sessions">
+                            <strong>Sessions (${sessions.length}):</strong>
+                            ${sessions.length > 0 ?
+                        `<div class="sessions-list">${sessionsHTML}</div>` :
+                        '<p>No sessions available</p>'
+                    }
+                        </div>
+                        
+                        ${event.has_user_bookings ?
+                        `<div class="booking-info">
+                                <strong>✅ You have ${event.user_bookings.length} booking(s) for this event</strong>
+                            </div>` :
+                        `<div class="no-bookings">
+                                <strong>📅 No bookings yet</strong> - Browse sessions above to book
+                            </div>`
+                    }
+                    </div>
+                `;
+            }
+
+            container.innerHTML = eventsHTML;
+
+            // Update pagination
+            updatePagination(pagination);
+        }
+
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function formatDateTime(dateString) {
+            return new Date(dateString).toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function updatePagination(pagination) {
+            const paginationDiv = document.getElementById('pagination');
+            const pageInfo = document.getElementById('pageInfo');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            pageInfo.textContent = `Page ${pagination.page} of ${pagination.pages}`;
+            prevBtn.disabled = !pagination.has_prev;
+            nextBtn.disabled = !pagination.has_next;
+
+            paginationDiv.style.display = 'block';
+        }
+
+        function changePage(delta) {
+            // Prevent default behavior
+            if (event) event.preventDefault();
+
+            currentPage += delta;
+            loadEvents();
+        }
+
+        function filterEvents(filter) {
+            // Prevent default behavior
+            if (event) event.preventDefault();
+
+            currentFilter = filter;
+            currentPage = 1;
+
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            loadEvents();
+        }
+
+        function searchEvents() {
+            // Prevent default behavior
+            if (event) event.preventDefault();
+
+            currentSearch = document.getElementById('searchBox').value;
+            currentPage = 1;
+            loadEvents();
+        }
+
+        function debounceSearch() {
+            // Clear existing timeout
+            if (searchTimeout) {
+                clearTimeout(searchTimeout);
+            }
+
+            // Set new timeout
+            searchTimeout = setTimeout(() => {
+                searchEvents();
+            }, 300); // Wait 300ms after user stops typing
+        }
+    </script>
+</body>
+
+</html>

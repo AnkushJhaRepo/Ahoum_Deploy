@@ -1,0 +1,166 @@
+2025-07-13 12:17:51,034 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2025-07-13 12:17:51,034 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-13 12:19:48,085 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 12:19:48] "GET /health HTTP/1.1" 200 -
+2025-07-13 13:02:00,396 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2025-07-13 13:02:00,399 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-13 13:02:05,368 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 13:02:05] "GET /health HTTP/1.1" 200 -
+2025-07-13 20:40:34,444 - __main__ - INFO - Log file path: notifications.json
+2025-07-13 20:40:35,340 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.0.106:5001
+2025-07-13 20:40:35,340 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-13 20:40:35,341 - werkzeug - INFO -  * Restarting with stat
+2025-07-13 20:40:42,155 - __main__ - INFO - Log file path: notifications.json
+2025-07-13 20:40:42,168 - werkzeug - WARNING -  * Debugger is active!
+2025-07-13 20:40:42,172 - werkzeug - INFO -  * Debugger PIN: 850-185-814
+2025-07-13 20:41:15,732 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 20:41:15] "GET /health HTTP/1.1" 200 -
+2025-07-13 20:41:56,728 - __main__ - INFO - Log file path: notifications.json
+2025-07-13 20:41:57,620 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.0.106:5001
+2025-07-13 20:41:57,620 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-13 20:41:57,621 - werkzeug - INFO -  * Restarting with stat
+2025-07-13 20:42:04,560 - __main__ - INFO - Log file path: notifications.json
+2025-07-13 20:42:04,572 - werkzeug - WARNING -  * Debugger is active!
+2025-07-13 20:42:04,576 - werkzeug - INFO -  * Debugger PIN: 850-185-814
+2025-07-13 20:42:16,365 - __main__ - INFO - Log file path: notifications.json
+2025-07-13 20:42:17,255 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.0.106:5001
+2025-07-13 20:42:17,255 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-13 20:42:17,256 - werkzeug - INFO -  * Restarting with stat
+2025-07-13 20:42:24,201 - __main__ - INFO - Log file path: notifications.json
+2025-07-13 20:42:24,214 - werkzeug - WARNING -  * Debugger is active!
+2025-07-13 20:42:24,217 - werkzeug - INFO -  * Debugger PIN: 850-185-814
+2025-07-13 20:48:02,459 - __main__ - INFO - Log file path: notifications.json
+2025-07-13 20:48:03,357 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.0.106:5001
+2025-07-13 20:48:03,357 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-13 20:48:03,358 - werkzeug - INFO -  * Restarting with stat
+2025-07-13 20:48:10,296 - __main__ - INFO - Log file path: notifications.json
+2025-07-13 20:48:10,309 - werkzeug - WARNING -  * Debugger is active!
+2025-07-13 20:48:10,313 - werkzeug - INFO -  * Debugger PIN: 850-185-814
+2025-07-13 20:54:26,233 - __main__ - INFO - Log file path: notifications.json
+2025-07-13 20:54:27,123 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.0.106:5001
+2025-07-13 20:54:27,123 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-13 20:54:27,124 - werkzeug - INFO -  * Restarting with stat
+2025-07-13 20:54:47,426 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 20:54:47] "GET /notifications HTTP/1.1" 200 -
+2025-07-13 20:54:47,452 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 20:54:47] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-13 20:55:24,836 - __main__ - INFO - Notification received: {
+  "timestamp": "2025-07-13T15:25:24.836973",
+  "booking_id": 7,
+  "user": {
+    "id": 11,
+    "name": "test4",
+    "email": "test4@gmail.com"
+  },
+  "event": {
+    "id": 5,
+    "title": "Creative Arts & Self-Expression Festival",
+    "start_date": "2025-08-17T11:54:56.653015"
+  },
+  "facilitator_id": 10
+}
+2025-07-13 20:55:24,836 - __main__ - INFO - Stored booking_id 7
+2025-07-13 20:55:24,837 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 20:55:24] "POST /notify HTTP/1.1" 200 -
+2025-07-13 20:55:35,346 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 20:55:35] "GET /notifications HTTP/1.1" 200 -
+2025-07-13 20:55:54,884 - __main__ - INFO - Notification received: {
+  "timestamp": "2025-07-13T15:25:54.884783",
+  "booking_id": 8,
+  "user": {
+    "id": 11,
+    "name": "test4",
+    "email": "test4@gmail.com"
+  },
+  "event": {
+    "id": 3,
+    "title": "Nature Conservation Awareness Event",
+    "start_date": "2025-08-07T11:54:56.653015"
+  },
+  "facilitator_id": 10
+}
+2025-07-13 20:55:54,885 - __main__ - INFO - Stored booking_id 8
+2025-07-13 20:55:54,885 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 20:55:54] "POST /notify HTTP/1.1" 200 -
+2025-07-13 20:58:24,868 - __main__ - INFO - Log file path: notifications.json
+2025-07-13 20:58:25,766 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.0.106:5001
+2025-07-13 20:58:25,767 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-13 20:58:25,767 - werkzeug - INFO -  * Restarting with stat
+2025-07-13 21:02:05,804 - __main__ - INFO - Log file path: notifications.json
+2025-07-13 21:02:06,703 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.0.106:5001
+2025-07-13 21:02:06,703 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-13 21:02:06,704 - werkzeug - INFO -  * Restarting with stat
+2025-07-13 21:13:57,569 - __main__ - INFO - Log file path: notifications.json
+2025-07-13 21:13:58,456 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.0.106:5001
+2025-07-13 21:13:58,456 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-13 21:13:58,457 - werkzeug - INFO -  * Restarting with stat
+2025-07-13 21:25:34,352 - __main__ - INFO - Log file path: notifications.json
+2025-07-13 21:25:35,243 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.0.106:5001
+2025-07-13 21:25:35,243 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-13 21:25:35,244 - werkzeug - INFO -  * Restarting with stat
+2025-07-13 21:32:18,584 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.0.106:5001
+2025-07-13 21:32:18,584 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-13 21:32:18,585 - werkzeug - INFO -  * Restarting with stat
+2025-07-13 21:32:18,778 - werkzeug - WARNING -  * Debugger is active!
+2025-07-13 21:32:18,782 - werkzeug - INFO -  * Debugger PIN: 850-185-814
+2025-07-13 21:32:36,055 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:32:36] "GET /health HTTP/1.1" 200 -
+2025-07-13 21:32:38,104 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:32:38] "GET /notifications HTTP/1.1" 200 -
+2025-07-13 21:32:40,166 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:32:40] "GET /dashboard HTTP/1.1" 200 -
+2025-07-13 21:32:44,913 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:32:44] "GET /dashboard HTTP/1.1" 200 -
+2025-07-13 21:32:44,935 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:32:44] "GET /health HTTP/1.1" 200 -
+2025-07-13 21:32:45,167 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:32:45] "GET /notifications HTTP/1.1" 200 -
+2025-07-13 21:32:45,262 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:32:45] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-13 21:33:20,076 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:33:20] "GET /dashboard HTTP/1.1" 200 -
+2025-07-13 21:33:20,095 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:33:20] "GET /health HTTP/1.1" 200 -
+2025-07-13 21:33:20,326 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:33:20] "GET /notifications HTTP/1.1" 200 -
+2025-07-13 21:33:20,420 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:33:20] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-13 21:33:36,125 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:33:36] "GET /health HTTP/1.1" 200 -
+2025-07-13 21:33:36,373 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:33:36] "GET /notifications HTTP/1.1" 200 -
+2025-07-13 21:33:38,303 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:33:38] "GET /health HTTP/1.1" 200 -
+2025-07-13 21:33:38,613 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:33:38] "GET /notifications HTTP/1.1" 200 -
+2025-07-13 21:33:45,266 - crm_app - INFO - Notification received: {
+  "timestamp": "2025-07-13T16:03:45.266452",
+  "booking_id": 14,
+  "user": {
+    "id": 8,
+    "name": "haha",
+    "email": "haha@example.com"
+  },
+  "event": {
+    "id": 1,
+    "title": "Yoga Wellness Retreat",
+    "start_date": "2025-07-28T11:54:56.653015"
+  },
+  "facilitator_id": 10
+}
+2025-07-13 21:33:45,268 - crm_app - INFO - Stored booking_id 14
+2025-07-13 21:33:45,268 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:33:45] "POST /notify HTTP/1.1" 200 -
+2025-07-13 21:33:50,095 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:33:50] "GET /health HTTP/1.1" 200 -
+2025-07-13 21:33:50,419 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:33:50] "GET /notifications HTTP/1.1" 200 -
+2025-07-13 21:33:51,162 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:33:51] "GET /dashboard HTTP/1.1" 200 -
+2025-07-13 21:33:51,470 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:33:51] "GET /health HTTP/1.1" 200 -
+2025-07-13 21:33:51,787 - werkzeug - INFO - 127.0.0.1 - - [13/Jul/2025 21:33:51] "GET /notifications HTTP/1.1" 200 -
