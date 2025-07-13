@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRM Notifications</title>
+    <title>CRM Notifications Dashboard</title>
+    <meta name="page-id" content="crm-notifications-dashboard">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -119,19 +120,53 @@
     <div id="status" class="status"></div>
 
     <button class="refresh-btn" onclick="loadNotifications()">Refresh Notifications</button>
+    <button class="refresh-btn" onclick="location.reload()" style="margin-left: 10px; background-color: #28a745;">Force
+        Reload Page</button>
 
     <div id="notifications-container">
         <div class="no-notifications">Loading notifications...</div>
     </div>
 
     <script>
+        // CRM service URL - update this if your CRM service runs on a different port
+        const CRM_SERVICE_URL = 'http://localhost:5001';
+
+        // Page isolation to prevent cross-tab conflicts
+        const PAGE_ID = 'crm-notifications-dashboard';
+        let isPageActive = true;
+        let isInitialized = false;
+
+        // Prevent conflicts with other tabs
+        window.addEventListener('blur', () => {
+            isPageActive = false;
+        });
+
+        window.addEventListener('focus', () => {
+            isPageActive = true;
+        });
+
+        // Prevent multiple initializations
+        if (window.crmNotificationsInitialized) {
+            console.log('CRM notifications already initialized in another tab');
+        } else {
+            window.crmNotificationsInitialized = true;
+            isInitialized = true;
+        }
+
         async function loadNotifications() {
+            // Don't load if page is not active or not initialized
+            if (!isPageActive || !isInitialized) {
+                return;
+            }
+
             const statusDiv = document.getElementById('status');
             const container = document.getElementById('notifications-container');
 
             try {
+                console.log('Loading notifications from:', `${CRM_SERVICE_URL}/notifications`);
+
                 // First check if service is running
-                const healthResponse = await fetch('/health');
+                const healthResponse = await fetch(`${CRM_SERVICE_URL}/health`);
                 if (!healthResponse.ok) {
                     throw new Error('CRM service is not responding');
                 }
@@ -140,13 +175,19 @@
                 statusDiv.textContent = 'Connected to CRM service';
 
                 // Load notifications
-                const response = await fetch('/notifications');
+                const response = await fetch(`${CRM_SERVICE_URL}/notifications`);
                 if (!response.ok) {
                     throw new Error('Failed to load notifications');
                 }
 
                 const data = await response.json();
                 const notifications = data.notifications || [];
+
+                console.log('Received notifications:', notifications.length);
+
+                // Update status with notification count and timestamp
+                const now = new Date().toLocaleTimeString();
+                statusDiv.textContent = `Connected to CRM service (${notifications.length} notifications) - Last updated: ${now}`;
 
                 if (notifications.length === 0) {
                     container.innerHTML = '<div class="no-notifications">No notifications found. Book a session to see notifications here.</div>';
@@ -211,8 +252,8 @@
         // Load notifications when page loads
         document.addEventListener('DOMContentLoaded', loadNotifications);
 
-        // Auto-refresh every 30 seconds
-        setInterval(loadNotifications, 30000);
+        // Remove auto-refresh completely to prevent cross-tab conflicts
+        // Users can manually refresh using the "Refresh Notifications" button
     </script>
 </body>
 

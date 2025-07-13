@@ -21,8 +21,8 @@ class CRMNotificationService:
     
     def send_booking_notification(self, 
                                  booking_id: int,
-                                 user_id: int,
-                                 session_id: int,
+                                 user_data: dict,
+                                 session_data: dict,
                                  action: str,
                                  additional_data: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """
@@ -30,8 +30,8 @@ class CRMNotificationService:
         
         Args:
             booking_id (int): ID of the booking
-            user_id (int): ID of the user
-            session_id (int): ID of the session
+            user_data (dict): User data with id, name, email
+            session_data (dict): Session data with event info
             action (str): Action performed (e.g., 'created', 'cancelled', 'reactivated')
             additional_data (dict, optional): Additional data to include
             
@@ -39,30 +39,20 @@ class CRMNotificationService:
             dict: Response from the CRM service
         """
         try:
-            # Get user and session details from database
-            from main_app.models.user import User
-            from main_app.models.session import Session
-            
-            user = User.query.get(user_id)
-            session = Session.query.get(session_id)
-            
-            if not user or not session:
-                raise Exception("User or session not found")
-            
             # Prepare the notification payload in the format expected by CRM service
             payload = {
                 'booking_id': booking_id,
                 'user': {
-                    'id': user.id,
-                    'name': user.name,
-                    'email': user.email
+                    'id': user_data['id'],
+                    'name': user_data['name'],
+                    'email': user_data['email']
                 },
                 'event': {
-                    'id': session.parent_event.id,
-                    'title': session.parent_event.title,
-                    'start_date': session.parent_event.start_date.isoformat()
+                    'id': session_data['event_id'],
+                    'title': session_data['event_title'],
+                    'start_date': session_data['event_start_date']
                 },
-                'facilitator_id': session.facilitator_id
+                'facilitator_id': session_data['facilitator_id']
             }
             
             # Add additional data if provided

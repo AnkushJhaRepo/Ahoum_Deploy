@@ -10,24 +10,69 @@ from sqlalchemy import desc
 
 booking_bp = Blueprint('bookings', __name__)
 
+# Create a singleton CRM service instance
+_crm_service = None
+
+def get_crm_service():
+    """Get or create CRM service instance"""
+    global _crm_service
+    if _crm_service is None:
+        _crm_service = CRMNotificationService()
+    return _crm_service
+
 def send_crm_notification(booking, user, session, action="created"):
-    """Send CRM notification for booking actions"""
+    """Send CRM notification for booking actions (simplified version to avoid reload issues)"""
     try:
-        crm_service = CRMNotificationService()
+        crm_service = get_crm_service()
+        
+        # Prepare user data
+        user_data = {
+            'id': user.id,
+            'name': user.name,
+            'email': user.email
+        }
+        
+        # Prepare session data - add error checking
+        try:
+            session_data = {
+                'event_id': session.parent_event.id,
+                'event_title': session.parent_event.title,
+                'event_start_date': session.parent_event.start_date.isoformat(),
+                'facilitator_id': session.facilitator_id
+            }
+        except AttributeError as e:
+            current_app.logger.error(f"Session data error: {str(e)}")
+            # Use fallback data
+            session_data = {
+                'event_id': session.event_id,
+                'event_title': 'Unknown Event',
+                'event_start_date': session.time.isoformat(),
+                'facilitator_id': session.facilitator_id
+            }
         
         # Prepare notification data
-        notification_data = {
-            'session_name': f"{session.parent_event.title} - {session.location}",
-            'session_time': session.time.isoformat(),
-            'session_location': session.location,
-            'facilitator_name': session.facilitator.name if session.facilitator else "Unknown"
-        }
+        try:
+            notification_data = {
+                'session_name': f"{session.parent_event.title} - {session.location}",
+                'session_time': session.time.isoformat(),
+                'session_location': session.location,
+                'facilitator_name': session.facilitator.name if session.facilitator else "Unknown"
+            }
+        except AttributeError as e:
+            current_app.logger.error(f"Notification data error: {str(e)}")
+            # Use fallback data
+            notification_data = {
+                'session_name': f"Session {session.id} - {session.location}",
+                'session_time': session.time.isoformat(),
+                'session_location': session.location,
+                'facilitator_name': "Unknown"
+            }
         
         # Send notification to CRM
         crm_service.send_booking_notification(
             booking_id=booking.id,
-            user_id=user.id,
-            session_id=session.id,
+            user_data=user_data,
+            session_data=session_data,
             action=action,
             additional_data=notification_data
         )
@@ -37,6 +82,7 @@ def send_crm_notification(booking, user, session, action="created"):
     except Exception as e:
         # Log error but don't fail the booking operation
         current_app.logger.error(f"Failed to send CRM notification for booking {booking.id}: {str(e)}")
+        # Don't re-raise the exception - let the booking succeed even if notification fails
 
 @booking_bp.route('/book', methods=['POST'])
 @jwt_required()

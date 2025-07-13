@@ -8,9 +8,14 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # Enable CORS
-    CORS(app, origins=['http://127.0.0.1:5500', 'http://localhost:5500', 'http://localhost:3000'], 
-         supports_credentials=True)
+    # Enable CORS with specific configuration to prevent cross-tab conflicts
+    CORS(app, 
+         origins=['http://127.0.0.1:5500', 'http://localhost:5500', 'http://localhost:3000'],
+         supports_credentials=True,
+         methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+         allow_headers=['Content-Type', 'Authorization', 'X-Requested-With'],
+         expose_headers=['Content-Type', 'Authorization'],
+         max_age=3600)
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -21,6 +26,10 @@ def create_app():
     @app.route("/")
     def index():
         return "Server running"
+
+    @app.route("/health")
+    def health():
+        return {"status": "healthy", "service": "main-event-app"}
 
     # Import and register blueprints/routes here
     from main_app.routes.auth_routes import auth_bp
@@ -34,6 +43,4 @@ def create_app():
     app.register_blueprint(facilitator_bp, url_prefix='/api/facilitator')
 
     return app
-
-app = create_app()
 

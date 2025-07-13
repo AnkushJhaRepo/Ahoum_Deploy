@@ -280,3 +280,12 @@ def get_session(session_id):
         
     except Exception as e:
         return jsonify({'error': 'Session not found'}), 404
+
+@event_bp.route('/events/<int:event_id>/sessions', methods=['GET'])
+@jwt_required()
+def get_event_sessions(event_id):
+    event = Event.query.get_or_404(event_id)
+    sessions = event.sessions
+    return jsonify({
+        'sessions': [s.to_dict() for s in sessions]
+    }), 200

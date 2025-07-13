@@ -1,9 +1,14 @@
+import os
+
+# CRITICAL: Set these environment variables FIRST to prevent any reloads
+os.environ['FLASK_DEBUG'] = '0'
+os.environ['FLASK_ENV'] = 'production'
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
 import logging
 from datetime import datetime
-import os
 from typing import Dict, Any, Optional
 from dotenv import load_dotenv
 
@@ -23,7 +28,13 @@ logger = logging.getLogger(__name__)
 
 # -------------------- INIT APP --------------------
 app = Flask(__name__)
-CORS(app)
+CORS(app, 
+     origins=['http://127.0.0.1:5500', 'http://localhost:5500', 'http://localhost:3000'],
+     supports_credentials=True,
+     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+     allow_headers=['Content-Type', 'Authorization', 'X-Requested-With'],
+     expose_headers=['Content-Type', 'Authorization'],
+     max_age=3600)
 
 # -------------------- CONFIGURATION --------------------
 app.config['CRM_NOTIFY_TOKEN'] = os.getenv('CRM_AUTH_TOKEN', 'your-static-bearer-token-here')
@@ -151,11 +162,19 @@ def health_check():
 def get_notifications():
     log_path = app.config['NOTIFICATION_LOG_FILE']
     if not os.path.exists(log_path):
-        return jsonify({'notifications': []}), 200
+        response = jsonify({'notifications': []})
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+        return response, 200
     try:
         with open(log_path, 'r') as f:
             notifications = json.load(f)
-        return jsonify({'notifications': notifications, 'count': len(notifications)}), 200
+        response = jsonify({'notifications': notifications, 'count': len(notifications)})
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+        return response, 200
     except Exception as e:
         logger.error(f"Error loading notifications: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
@@ -191,5 +210,8 @@ if __name__ == '__main__':
     logger.info(f"Log file path: {app.config['NOTIFICATION_LOG_FILE']}")
 
     port = int(os.getenv('CRM_PORT', 5001))
-    debug = os.getenv('CRM_DEBUG', 'false').lower() == 'true'
-    app.run(host='0.0.0.0', port=port, debug=debug)
+    # Completely disable debug mode and reloader to prevent reloads
+    print("CRM Debug mode: disabled (no reloads)")
+    
+    # Use Flask's run method with all reload prevention
+    app.run(host='0.0.0.0', port=port, debug=False, use_reloader=False, threaded=True)

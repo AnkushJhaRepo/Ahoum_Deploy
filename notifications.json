@@ -1,0 +1,25 @@
+[
+  {
+    "timestamp": "2025-07-13T16:52:09.587304",
+    "data": {
+      "booking_id": 24,
+      "user": {
+        "id": 12,
+        "name": "John Smith",
+        "email": "john.facilitator@example.com"
+      },
+      "event": {
+        "id": 5,
+        "title": "Creative Arts & Self-Expression Festival",
+        "start_date": "2025-08-17T11:54:56.653015"
+      },
+      "facilitator_id": 10,
+      "additional_data": {
+        "session_name": "Creative Arts & Self-Expression Festival - Music Room",
+        "session_time": "2025-08-18T02:41:00.531230",
+        "session_location": "Music Room",
+        "facilitator_name": "Event Facilitator"
+      }
+    }
+  }
+]

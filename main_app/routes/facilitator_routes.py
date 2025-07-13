@@ -10,21 +10,22 @@ from sqlalchemy import desc
 
 facilitator_bp = Blueprint('facilitator', __name__)
 
-def require_facilitator():
+from functools import wraps
+
+def require_facilitator(f):
     """Decorator to require facilitator role"""
-    def decorator(f):
-        def wrapper(*args, **kwargs):
-            current_user_id = get_jwt_identity()
-            user = User.query.get(current_user_id)
-            if not user or not user.is_facilitator:
-                return jsonify({'error': 'Facilitator access required'}), 403
-            return f(*args, **kwargs)
-        return wrapper
-    return decorator
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        current_user_id = get_jwt_identity()
+        user = User.query.get(current_user_id)
+        if not user or not user.is_facilitator:
+            return jsonify({'error': 'Facilitator access required'}), 403
+        return f(*args, **kwargs)
+    return decorated_function
 
 @facilitator_bp.route('/users', methods=['GET'])
 @jwt_required()
-@require_facilitator()
+@require_facilitator
 def get_registered_users():
     """Get all registered users (facilitators only)"""
     try:
@@ -79,7 +80,7 @@ def get_registered_users():
 
 @facilitator_bp.route('/my-sessions', methods=['GET'])
 @jwt_required()
-@require_facilitator()
+@require_facilitator
 def get_my_sessions():
     """Get all sessions for the current facilitator"""
     try:
@@ -141,7 +142,7 @@ def get_my_sessions():
 
 @facilitator_bp.route('/sessions/<int:session_id>/bookings', methods=['GET'])
 @jwt_required()
-@require_facilitator()
+@require_facilitator
 def get_session_bookings(session_id):
     """Get all bookings for a specific session (facilitator must own the session)"""
     try:
@@ -173,7 +174,7 @@ def get_session_bookings(session_id):
 
 @facilitator_bp.route('/sessions/<int:session_id>', methods=['PUT'])
 @jwt_required()
-@require_facilitator()
+@require_facilitator
 def update_session(session_id):
     """Update session details (facilitator must own the session)"""
     try:
@@ -220,7 +221,7 @@ def update_session(session_id):
 
 @facilitator_bp.route('/sessions/<int:session_id>/cancel', methods=['POST'])
 @jwt_required()
-@require_facilitator()
+@require_facilitator
 def cancel_session(session_id):
     """Cancel a session and all its bookings (facilitator must own the session)"""
     try:
@@ -263,7 +264,7 @@ def cancel_session(session_id):
 
 @facilitator_bp.route('/dashboard', methods=['GET'])
 @jwt_required()
-@require_facilitator()
+@require_facilitator
 def facilitator_dashboard():
     """Get facilitator dashboard data"""
     try:
@@ -293,4 +294,24 @@ def facilitator_dashboard():
         
     except Exception as e:
         current_app.logger.error(f"Error in facilitator_dashboard: {str(e)}")
-        return jsonify({'error': 'Internal server error'}), 500 
+        return jsonify({'error': 'Internal server error'}), 500
+
+@facilitator_bp.route('/dashboard-page', methods=['GET'])
+def facilitator_dashboard_page():
+    """Serve the facilitator dashboard HTML page"""
+    try:
+        # Read the facilitator dashboard HTML file
+        import os
+        dashboard_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'facilitator_dashboard.html')
+        
+        with open(dashboard_path, 'r', encoding='utf-8') as f:
+            html_content = f.read()
+        
+        # Set proper content type
+        from flask import Response
+        return Response(html_content, mimetype='text/html')
+    except FileNotFoundError:
+        return "Facilitator dashboard not found", 404
+    except Exception as e:
+        current_app.logger.error(f"Error serving facilitator dashboard: {str(e)}")
+        return "Internal server error", 500 

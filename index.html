@@ -942,6 +942,14 @@
             if (currentUser) {
                 document.getElementById('userName').textContent = currentUser.name;
                 document.getElementById('userEmail').textContent = currentUser.email;
+
+                // Show facilitator button if user is a facilitator
+                const facilitatorBtn = document.getElementById('facilitatorBtn');
+                if (currentUser.role === 'facilitator') {
+                    facilitatorBtn.style.display = 'inline-block';
+                } else {
+                    facilitatorBtn.style.display = 'none';
+                }
             }
 
             // Load events
@@ -971,7 +979,7 @@
         }
 
         function openFacilitatorDashboard() {
-            window.open('facilitator_dashboard.html', '_blank');
+            window.open('http://localhost:5000/api/facilitator/dashboard-page', '_blank');
         }
 
         async function loadEvents() {

@@ -4,6 +4,10 @@ from datetime import timedelta
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'supersecretkey')
     
+    # Explicitly disable debug mode to prevent reloads
+    DEBUG = False
+    TESTING = False
+    
     # Get database URI from environment or use default with absolute path
     default_db_uri = os.getenv('SQLALCHEMY_DATABASE_URI')
     if not default_db_uri:
@@ -35,4 +39,4 @@ class Config:
     CRM_AUTH_TOKEN = os.getenv('CRM_AUTH_TOKEN', 'your-static-bearer-token-here')
 
 class DevConfig(Config):
-    DEBUG = True
+    DEBUG = False  # Keep debug disabled even in dev config
